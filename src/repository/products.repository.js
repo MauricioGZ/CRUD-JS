@@ -51,11 +51,11 @@ const insert = async (product) => {
                               product.updatedAt
                             ]
                           );
-    console.log(result);
+    return result;
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 const getByID = async (id) => {
   try {
@@ -65,9 +65,20 @@ const getByID = async (id) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-export const products = {
+const deleteByID = async (id) => {
+  try {
+    const connection = getConnection();
+    const [result] = await connection.query(qryDeleteProductByID, id);
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const productsRepository = {
   insert,
-  getByID
+  getByID,
+  deleteByID,
 };
