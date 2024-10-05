@@ -27,8 +27,8 @@ const insert = async (user) => {
     const result = await connection.query(
                             qryInsertUser, 
                             [
-                              user.firstName,
-                              user.lastName,
+                              user.first_name,
+                              user.last_name,
                               user.email,
                               user.password,
                               user.roleID,
