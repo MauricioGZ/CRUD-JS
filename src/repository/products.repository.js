@@ -21,6 +21,17 @@ const qryGetProductByID = `	select
                               updatedAt
                             from PRODUCTS
                             where id = ?;`;
+const qryGetAllProducts = `	select
+                              id,
+                              name,
+                              description,
+                              price,
+                              stock,
+                              categoryId,
+                              image,
+                              createdAt,
+                              updatedAt
+                            from PRODUCTS;`;
 const qryUpdateProductByID = `update PRODUCTS
                         set
                           name = ?,
@@ -61,6 +72,16 @@ const getByID = async (id) => {
   try {
     const connection = getConnection();
     const [result] = await connection.query(qryGetProductByID, id);
+    return result[0];
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getAll = async () => {
+  try {
+    const connection = getConnection();
+    const [result] = await connection.query(qryGetAllProducts);
     return result;
   } catch (error) {
     console.log(error);
@@ -80,5 +101,6 @@ const deleteByID = async (id) => {
 export const productsRepository = {
   insert,
   getByID,
+  getAll,
   deleteByID,
 };
