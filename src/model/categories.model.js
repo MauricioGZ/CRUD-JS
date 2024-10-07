@@ -12,9 +12,6 @@ export class CategoryNode {
     const newNode = new CategoryNode(id, name, description);
     this.childs.push(newNode);
   };
-  getHead(){
-    return this.head;
-  };
   getLastChild() {
     return this.childs[this.childs.length - 1];
   };
