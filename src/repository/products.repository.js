@@ -32,16 +32,28 @@ const qryGetAllProducts = `	select
                               createdAt,
                               updatedAt
                             from PRODUCTS;`;
+const qryGetProductsByCategoryID = `select
+                                      id,
+                                      name,
+                                      description,
+                                      price,
+                                      stock,
+                                      categoryId,
+                                      image,
+                                      createdAt,
+                                      updatedAt
+                                    from PRODUCTS
+                                    where categoryId = ?;`
 const qryUpdateProductByID = `update PRODUCTS
-                        set
-                          name = ?,
-                          description = ?,
-                          price = ?,
-                          stock = ?,
-                          categoryId = ?,
-                          image = ?,
-                          updatedAt = ?
-                        where id = ?;`;
+                              set
+                                name = ?,
+                                description = ?,
+                                price = ?,
+                                stock = ?,
+                                categoryId = ?,
+                                image = ?,
+                                updatedAt = ?
+                              where id = ?;`;
 const qryDeleteProductByID = `delete 
                         from PRODUCTS
                         where id = ?;`;
@@ -78,6 +90,16 @@ const getByID = async (id) => {
   }
 };
 
+const getByCategoryID = async(categoryID) => {
+  try {
+    const connection = getConnection();
+    const [result] = await connection.query(qryGetProductsByCategoryID, categoryID);
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const getAll = async () => {
   try {
     const connection = getConnection();
@@ -101,6 +123,7 @@ const deleteByID = async (id) => {
 export const productsRepository = {
   insert,
   getByID,
+  getByCategoryID,
   getAll,
   deleteByID,
 };

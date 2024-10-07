@@ -42,7 +42,30 @@ const getByID = async (id) => {
   }
 };
 
+const getByCategoryID = async (categoryID) => {
+  try {
+    const result = await productsRepository.getByCategoryID(categoryID);
+    const products = result.map((element) => {
+      return new Product(
+        element.id,
+        element.name,
+        element.description,
+        element.price,
+        element.stock,
+        element.categoryId,
+        element.image,
+        element.createdAt,
+        element.updatedAt,
+      );
+    });
+    return products
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const productsService = {
   getAll,
   getByID,
+  getByCategoryID,
 }
