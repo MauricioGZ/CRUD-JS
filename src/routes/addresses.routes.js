@@ -1,4 +1,5 @@
 import { addressesService } from "../service/addresses.service.js";
+import { InsertAddress } from "./dtos/addresses.dtos.js";
 
 export const addressesRouter = (app) => {
   app.get("/addresses", async (req, res) => {
@@ -27,15 +28,14 @@ export const addressesRouter = (app) => {
         zip_code,
       } = req.body;
 
-      await addressesService.add({
-        userID: user.id,
-        type: address_type,
-        name: address,
-        city: city,
-        state: state,
-        country: country,
-        zipCode: zip_code,
-      });
+      await addressesService.add(new InsertAddress(
+        address_type,
+        address,
+        city,
+        state,
+        country,
+        zip_code,
+      ));
 
       res.status(200).send("address added");
     } catch (error) {

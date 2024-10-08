@@ -64,8 +64,17 @@ const getByCategoryID = async (categoryID) => {
   }
 };
 
+const add = async (product) => {
+  try {
+    await productsRepository.insert(product);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const productsService = {
   getAll,
   getByID,
   getByCategoryID,
+  add,
 }

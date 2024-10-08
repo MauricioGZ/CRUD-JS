@@ -1,6 +1,7 @@
 import { userService } from "../service/user.service.js";
 import jwt from 'jsonwebtoken';
 import config from "../config.js";
+import { RegisterUser } from "./dtos/user.dtos.js";
 
 export const userRouter = (app) => {
   app.post("/register", async (req, res) => {
@@ -11,14 +12,12 @@ export const userRouter = (app) => {
       password
     } = req.body;
 
-    const {user, result} = await userService.register({
+    const {user, result} = await userService.register(new RegisterUser(
       first_name,
       last_name,
       email,
       password,
-      roleID: 1,
-      createdAt: "2024-09-04 20:28:13",
-    });
+    ));
   
     const token = jwt.sign({
       id: user.id, 
