@@ -7,7 +7,6 @@ import { addressesRouter } from './routes/addresses.routes.js';
 import jwt from 'jsonwebtoken';
 import config from './config.js';
 
-const key = "";
 const app = express();
 
 //settings
@@ -20,9 +19,7 @@ app.use((req, res, next) => {
   try {
     const data = jwt.verify(token, config.key);
     req.session.user = data;
-  } catch (error) {
-    console.log(error);
-  }
+  } catch {}
 
   next();
 });
