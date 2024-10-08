@@ -22,7 +22,7 @@ const register = async(user) => {
     return {user: { 
       id: result[0].insertId, 
       email: user.email, 
-      role: user.roleId,
+      roleID: user.roleId,
     }, result: error};
   } catch (error) {
     console.log(error);
@@ -44,7 +44,7 @@ const login = async(user) => {
     return {user: { 
                     id: result[0].id, 
                     email: result[0].email, 
-                    role: result[0].roleId,
+                    roleID: result[0].roleId,
                   }, result: true};
   } catch (error) {
     console.log(error);

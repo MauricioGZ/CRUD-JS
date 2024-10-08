@@ -1,8 +1,6 @@
 import { userService } from "../service/user.service.js";
 import jwt from 'jsonwebtoken';
-
-//TODO: move this to .env
-const key = "01234567890123456789012345678901";
+import config from "../config.js";
 
 export const userRouter = (app) => {
   app.post("/register", async (req, res) => {
@@ -25,8 +23,12 @@ export const userRouter = (app) => {
     const token = jwt.sign({
       id: user.id, 
       email: user.email, 
-      roleId: user.roleId,
-    }, key, {expiresIn: "5m"});
+      roleId: user.roleID,
+    }, 
+    config.key, 
+    {
+      expiresIn: "1h",
+    });
 
     if (result !== null) {
       //TODO: implement different responses for the different error cases
@@ -53,8 +55,12 @@ export const userRouter = (app) => {
     const token = jwt.sign({
                             id: user.id, 
                             email: user.email, 
-                            roleId: user.roleId,
-                          }, key, {expiresIn: "5m"});
+                            roleId: user.roleID,
+                          }, 
+                          config.key, 
+                          {
+                            expiresIn: "1h",
+                          });
 
     res.cookie('access_token',token, {
       httpOnly: true,

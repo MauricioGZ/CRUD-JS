@@ -68,8 +68,8 @@ const insert = async (address) => {
 const getByID = async (id) => {
   try {
     const connection = getConnection();
-    const [result] = await connection.query(qryUpdateAddressByID, id);
-    return result;
+    const [result] = await connection.query(qryGetAddressByID, id);
+    return result[0];
   } catch (error) {
     console.log(error);
   }
