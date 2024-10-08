@@ -32,4 +32,5 @@ const add = async (address) => {
 
 export const addressesService = {
   getByUserID,
+  add,
 };
