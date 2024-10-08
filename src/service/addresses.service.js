@@ -3,7 +3,7 @@ import { addressesRepository } from "../repository/addresses.repository.js";
 
 const getByUserID = async (userID) => {
   try {
-    const result = addressesRepository.getByUserID(userID);
+    const result = await addressesRepository.getByUserID(userID);
     const addresses = result.map((element) => {
       return new Address(
         element.id,
@@ -19,6 +19,14 @@ const getByUserID = async (userID) => {
     return addresses;
   } catch (error) {
     console.log(error);
+  }
+};
+
+const add = async (address) => {
+  try {
+    await addressesRepository.insert(address);
+  } catch (error) {
+    console.log(error)
   }
 };
 
