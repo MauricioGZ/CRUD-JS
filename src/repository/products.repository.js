@@ -8,7 +8,7 @@ const qryInsertProduct = `insert into PRODUCTS(
                             image,
                             createdAt,
                             updatedAt)
-                          values(?,?,?,?,?,?,?,?);`;
+                          values(?,?,?,?,?,?,NOW(),NOW());`;
 const qryGetProductByID = `	select
                               id,
                               name,
@@ -52,7 +52,7 @@ const qryUpdateProductByID = `update PRODUCTS
                                 stock = ?,
                                 categoryId = ?,
                                 image = ?,
-                                updatedAt = ?
+                                updatedAt = NOW()
                               where id = ?;`;
 const qryDeleteProductByID = `delete 
                         from PRODUCTS
@@ -70,8 +70,6 @@ const insert = async (product) => {
                               product.stock,
                               product.categoryID,
                               product.image,
-                              product.createdAt,
-                              product.updatedAt
                             ]
                           );
     return result;
@@ -120,10 +118,32 @@ const deleteByID = async (id) => {
   }
 };
 
+const updateByID = async (product) => {
+  try {
+    const connection = getConnection();
+    const [result] = await connection.query(
+      qryUpdateProductByID, 
+      [
+        product.name,
+        product.description,
+        product.price,
+        product.stock,
+        product.categoryID,
+        product.image,
+        product.id,
+      ],
+    );
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const productsRepository = {
   insert,
   getByID,
   getByCategoryID,
   getAll,
   deleteByID,
+  updateByID,
 };

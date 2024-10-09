@@ -72,9 +72,27 @@ const add = async (product) => {
   }
 };
 
+const updateByID = async (product) => {
+  try {
+    const result = await productsRepository.getByID(product.id);
+
+    if (product.name == null) product.name = result.name;
+    if (product.description == null) product.description = result.description;
+    if (product.price == null) product.price = result.price;
+    if (product.stock == null) product.stock = result.stock;
+    if (product.categoryID == null) product.categoryID = result.categoryId;
+    if (product.image == null) product.image = result.image;
+
+    await productsRepository.updateByID(product);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const productsService = {
   getAll,
   getByID,
   getByCategoryID,
   add,
+  updateByID,
 }

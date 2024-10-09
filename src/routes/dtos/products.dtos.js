@@ -1,12 +1,17 @@
 export class InsertProduct {
-  constructor(name, description, price, stock, categoryID, image, createdAt, updatedAt ){
+  constructor(name, description, price, stock, categoryID, image){
     this.name = name; 
     this.description = description;
     this.price = price;
     this.stock = stock;
     this.categoryID = categoryID;
     this.image = image;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
   }
-};
+}
+
+export class UpdateProduct extends InsertProduct {
+  constructor(id, name, description, price, stock, categoryID, image){
+    super(name, description, price, stock, categoryID, image);
+    this.id = id;
+  }
+}

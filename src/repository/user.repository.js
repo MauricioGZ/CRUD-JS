@@ -7,7 +7,7 @@ const qryInsertUser = `	insert into USERS (
                           roleId,
                           createdAt
                         )
-                        values (?,?,?,?,?,?);`;
+                        values (?,?,?,?,3,NOW());`;
 const qryGetUserByEmail = `	select 
                               id, 
                               firstName, 
@@ -31,8 +31,6 @@ const insert = async (user) => {
                               user.last_name,
                               user.email,
                               user.password,
-                              user.roleID,
-                              user.createdAt
                             ]
                           );
     return {result: result, error: null};
