@@ -56,7 +56,7 @@ const insert = async (address) => {
                               address.city,
                               address.state,
                               address.country,
-                              address.zipCode
+                              address.zipCode,
                             ]
                           );
     return result
@@ -65,10 +65,10 @@ const insert = async (address) => {
   }
 };
 
-const getByID = async (id) => {
+const getByID = async (id, userID) => {
   try {
     const connection = getConnection();
-    const [result] = await connection.query(qryGetAddressByID, id);
+    const [result] = await connection.query(qryGetAddressByID, [id, userID]);
     return result[0];
   } catch (error) {
     console.log(error);
@@ -95,9 +95,31 @@ const deleteByID = async (id) => {
   }
 };
 
+const updateByID = async (address) => {
+  try {
+    const connection = getConnection();
+    const [result] = await connection.query(
+      qryUpdateAddressByID,
+      [
+        address.type,
+        address.name,
+        address.city,
+        address.state,
+        address.country,
+        address.zipCode,
+        address.id,
+        address.userID,
+      ]
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const addressesRepository = {
   insert,
   getByID,
   getByUserID,
-  deleteByID
+  deleteByID,
+  updateByID,
 };

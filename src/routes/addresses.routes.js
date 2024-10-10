@@ -1,5 +1,5 @@
 import { addressesService } from "../service/addresses.service.js";
-import { InsertAddress } from "./dtos/addresses.dtos.js";
+import { InsertAddress, UpadteAddress } from "./dtos/addresses.dtos.js";
 
 export const addressesRouter = (app) => {
   app.get("/addresses", async (req, res) => {
@@ -29,6 +29,7 @@ export const addressesRouter = (app) => {
       } = req.body;
 
       await addressesService.add(new InsertAddress(
+        user.id,
         address_type,
         address,
         city,
@@ -38,6 +39,37 @@ export const addressesRouter = (app) => {
       ));
 
       res.status(200).send("address added");
+    } catch (error) {
+      res.status(500).send("internal server error");
+    }
+  });
+  
+  app.patch("/addresses/:id", async (req, res) => {
+    try {
+      const {user} = req.session;
+      if (!user) return res.status(403).send("unauthorized");
+  
+      const {id} = req.params;
+      const {
+        address_type,
+        address,
+        city,
+        state,
+        country,
+        zip_code
+      } = req.body;
+  
+      await addressesService.updateByID(new UpadteAddress(
+        id,
+        user.id,
+        address_type,
+        address,
+        city,
+        state,
+        country,
+        zip_code,
+      ));
+      res.status(200).send("address updated");
     } catch (error) {
       res.status(500).send("internal server error");
     }

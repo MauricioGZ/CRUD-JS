@@ -9,3 +9,10 @@ export class InsertAddress {
     this.zipCode = zipCode;
   }
 }
+
+export class UpadteAddress extends InsertAddress {
+  constructor(id,userID, addressType, address, city, state, country, zipCode) {
+    super(userID, addressType, address, city, state, country, zipCode);
+    this.id =id;
+  }
+}
