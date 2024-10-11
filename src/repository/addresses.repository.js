@@ -59,6 +59,7 @@ const insert = async (address) => {
                               address.zipCode,
                             ]
                           );
+    conn.releaseConnection();
     return result
   } catch (error) {
     console.log(error);
@@ -69,6 +70,7 @@ const getByID = async (id, userID) => {
   try {
     const connection = getConnection();
     const [result] = await connection.query(qryGetAddressByID, [id, userID]);
+    conn.releaseConnection();
     return result[0];
   } catch (error) {
     console.log(error);
@@ -79,6 +81,7 @@ const getByUserID = async (userID) => {
   try {
     const connection = getConnection();
     const [result] = await connection.query(qryGetAddressesByUserID, userID);
+    conn.releaseConnection();
     return result;
   } catch (error) {
     console.log(error);
@@ -89,6 +92,7 @@ const deleteByID = async (id) => {
   try {
     const connection = getConnection();
     const [result] = await connection.query(qryDeleteAddressByID, id);
+    conn.releaseConnection();
     return result;
   } catch (error) {
     console.log(error);
@@ -111,6 +115,8 @@ const updateByID = async (address) => {
         address.userID,
       ]
     );
+    conn.releaseConnection();
+    return result;
   } catch (error) {
     console.log(error);
   }

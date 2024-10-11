@@ -33,6 +33,7 @@ const insert = async (user) => {
                               user.password,
                             ]
                           );
+    conn.releaseConnection();
     return {result: result, error: null};
   } catch (error) {
     return {result: null, error: error.code};
@@ -43,6 +44,7 @@ const getByEmail = async (email) => {
   try {
     const connection = getConnection();
     const [result] = await connection.query(qryGetUserByEmail, email);
+    conn.releaseConnection();
     return {result: result, error: null};
   } catch (error) {
     return {result: null, error: error.code};
@@ -53,6 +55,7 @@ const deleteByEmail = async (email) => {
   try {
     const connection = getConnection();
     const [result] = await connection.query(qryDeleteUserByEmail, email);
+    conn.releaseConnection();
     return result;
   } catch (error) {
     console.log(error);

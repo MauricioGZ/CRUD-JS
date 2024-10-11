@@ -72,6 +72,7 @@ const insert = async (product) => {
                               product.image,
                             ]
                           );
+    conn.releaseConnection();
     return result;
   } catch (error) {
     console.log(error);
@@ -82,6 +83,7 @@ const getByID = async (id) => {
   try {
     const connection = getConnection();
     const [result] = await connection.query(qryGetProductByID, id);
+    conn.releaseConnection();
     return result[0];
   } catch (error) {
     console.log(error);
@@ -92,6 +94,7 @@ const getByCategoryID = async(categoryID) => {
   try {
     const connection = getConnection();
     const [result] = await connection.query(qryGetProductsByCategoryID, categoryID);
+    conn.releaseConnection();
     return result;
   } catch (error) {
     console.log(error);
@@ -102,6 +105,7 @@ const getAll = async () => {
   try {
     const connection = getConnection();
     const [result] = await connection.query(qryGetAllProducts);
+    conn.releaseConnection();
     return result;
   } catch (error) {
     console.log(error);
@@ -112,6 +116,7 @@ const deleteByID = async (id) => {
   try {
     const connection = getConnection();
     const [result] = await connection.query(qryDeleteProductByID, id);
+    conn.releaseConnection();
     return result;
   } catch (error) {
     console.log(error);
@@ -133,6 +138,7 @@ const updateByID = async (product) => {
         product.id,
       ],
     );
+    conn.releaseConnection();
     return result;
   } catch (error) {
     console.log(error);

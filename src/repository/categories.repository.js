@@ -86,7 +86,7 @@ const getByID = async (id) => {
     const conn = getConnection();
     const [result] = await conn.query(qryGetCategoryByID, id);
     conn.releaseConnection();
-    return result;
+    return result[0];
   } catch (error) {
     console.log(error);
   }
