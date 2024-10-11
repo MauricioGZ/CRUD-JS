@@ -36,17 +36,95 @@ const qryUpdateCategoryByID = `	update CATEGORIES
                                   descripction = ?,
                                   parentId = ?
                                 where id = ?;`;
+const qryUpdateCategoryByIDWithoutParent = `update CATEGORIES
+                                            set
+                                              name = ?,
+                                              descripction = ?
+                                            where id = ?;`;
+
+const insert = async (category) => {
+  try {
+    const conn = getConnection();
+    if (!category.parentID) {
+      const [result] = conn.query(
+        qryInsertCategory,
+        [
+          category.name,
+          category.description,
+          category.parentID,
+        ],
+      );
+    } else {
+      const [result] = conn.query(
+        qryInsertCategoryWithoutParent,
+        [
+          category.name,
+          category.description,
+        ],
+      );
+    }
+    conn.releaseConnection();
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const getAll = async () => {
   try {
     const conn = getConnection();
     const [result] = await conn.query(qryGetAllCategories);
+    conn.releaseConnection();
     return result;
   } catch (error) {
     console.log(error);
   }
 }
 
+const getByID = async (id) => {
+  try {
+    const conn = getConnection();
+    const [result] = await conn.query(qryGetCategoryByID, id);
+    conn.releaseConnection();
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const updateByID = async (category) => {
+  try {
+    const conn = getConnection();
+    if (!category.parentID) {
+      const [result] = conn.query(
+        qryUpdateCategoryByID,
+        [
+          category.name,
+          category.description,
+          category.parentID,
+          category.id,
+        ],
+      );
+    } else {
+      const [result] = conn.query(
+        qryUpdateCategoryByIDWithoutParent,
+        [
+          category.name,
+          category.description,
+          category.id,
+        ],
+      );
+    }
+    conn.releaseConnection();
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const categoriesRepository = {
   getAll,
+  getByID,
+  insert,
+  updateByID,
 };
