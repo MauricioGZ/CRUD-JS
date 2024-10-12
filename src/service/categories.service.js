@@ -36,6 +36,40 @@ const getAll = async () => {
   }
 };
 
+const getByID = async (id) => {
+  try {
+    const result = await categoriesRepository.getByID(id);
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const add = async (category) => {
+  try {
+    await categoriesRepository.insert(category);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const updateByID = async (category) => {
+  try {
+    const result = await categoriesRepository.getByID(category.id);
+
+    if(!category.name) category.name = result.name;
+    if(!category.description) category.description = result.description;
+    if(!category.name) category.parentID = result.parentId;
+
+    await categoriesRepository.updateByID(category);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const categoriesService = {
   getAll,
+  getByID,
+  add,
+  updateByID,
 };

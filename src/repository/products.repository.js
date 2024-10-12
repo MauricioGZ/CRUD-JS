@@ -55,8 +55,8 @@ const qryUpdateProductByID = `update PRODUCTS
                                 updatedAt = NOW()
                               where id = ?;`;
 const qryDeleteProductByID = `delete 
-                        from PRODUCTS
-                        where id = ?;`;
+                              from PRODUCTS
+                              where id = ?;`;
 
 const insert = async (product) => {
   try {

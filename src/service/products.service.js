@@ -87,7 +87,11 @@ const updateByID = async (product) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
+
+const deleteByID = async (id) => {
+  //TODO: finish this when the order repo is ready
+};
 
 export const productsService = {
   getAll,
